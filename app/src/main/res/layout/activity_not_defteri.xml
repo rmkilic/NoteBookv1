@@ -15,7 +15,7 @@
 
 
         android:layout_marginTop="34dp"
-        android:layout_below="@+id/txtKonu"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
     <EditText
@@ -29,42 +29,37 @@
         />
 
     <Button
-        android:id="@+id/btnBitti"
+        android:id="@+id/btnEkle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
-        android:text="Bitti"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="92dp"
-        android:layout_marginStart="92dp" />
-
+        android:text="Tamam"
+        android:background="@drawable/button"
+        android:layout_alignBaseline="@+id/btnGuncelle"
+        android:layout_alignBottom="@+id/btnGuncelle"
+        android:layout_alignLeft="@+id/btnGuncelle"
+        android:layout_alignStart="@+id/btnGuncelle" />
     <Button
         android:id="@+id/btnGuncelle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnBitti"
-        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="56dp"
+        android:text="Tamam"
+        android:background="@drawable/button"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="84dp"
-        android:layout_marginRight="84dp"
-        android:text="Güncelle" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp" />
 
-    <TextView
-        android:id="@+id/txtKonu"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnSil"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btnBitti"
-        android:layout_alignRight="@+id/btnBitti"
+        android:text="Sil"
+        android:background="@drawable/button"
+        android:layout_alignBaseline="@+id/btnEkle"
+        android:layout_alignBottom="@+id/btnEkle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        android:layout_marginTop="73dp"
-         />
-
-    <TextView
-        android:id="@+id/txtIcerik"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:text="TextView" />
 </RelativeLayout>

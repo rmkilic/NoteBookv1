@@ -16,11 +16,13 @@ public class NotDefteri extends AppCompatActivity {
 
     EditText editKonu;
     EditText editIcerik;
-    TextView txtkonu;
-    TextView txtnot;
-    Button btnBiter;
+    Button btnSil;
+    Button btnEkle;
     Button btnGuncelle;
+    int index;
     int x;
+
+
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor ;
@@ -29,42 +31,91 @@ public class NotDefteri extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_not_defteri);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = preferences.edit();
+        editKonu = (EditText) findViewById(R.id.editKonu);
+        editIcerik = (EditText) findViewById(R.id.editIcerik);
+        btnSil = (Button) findViewById(R.id.btnSil);
+        btnEkle = (Button) findViewById(R.id.btnEkle);
+        btnGuncelle = (Button) findViewById(R.id.btnGuncelle);
 
- preferences=  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    editor= preferences.edit();
-        editKonu=(EditText) findViewById(R.id.editKonu);
-        editIcerik=(EditText) findViewById(R.id.editIcerik);
-        txtkonu=(TextView) findViewById(R.id.txtKonu);
-        txtnot=(TextView) findViewById(R.id.txtIcerik);
-        btnBiter= (Button) findViewById(R.id.btnBitti);
-        btnGuncelle=(Button)findViewById(R.id.btnGuncelle);
+        Bundle bd = getIntent().getExtras();
+        if(bd != null)
+        {
+            index = getIntent().getIntExtra("indis",0);
+            btnGuncelle.setVisibility(View.VISIBLE);
+            btnEkle.setVisibility(View.INVISIBLE);
+            tiklandigindaGetir(index);
+        }
+        else
+        {
+            Ekran_Goster();
+            btnGuncelle.setVisibility(View.INVISIBLE);
+            btnEkle.setVisibility(View.VISIBLE);
+        }
 
 
-       // editor.putString("konu",editKonu.getText().toString());
-        //editor.putString("icerik",editIcerik.getText().toString());
-
-      //  editor.commit();
-
-
-        btnBiter.setOnClickListener(new View.OnClickListener() {
+        btnGuncelle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                x = preferences.getInt("index",0);
-                editor.putString("konu"+x, editKonu.getText().toString());
-                editor.putString("not"+x, editIcerik.getText().toString());
-                x++;
-                editor.putInt("index",x);
-                editor.commit();
-                Intent gecis = new Intent(NotDefteri.this, Ana_Sayfa.class);
-                startActivity(gecis);
+                    editor.putString("konu" + index, editKonu.getText().toString());
+                    editor.putString("not" + index, editIcerik.getText().toString());
+                    editor.commit();
+                    finish();
+                }
+        });
 
-
+        btnEkle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                x = preferences.getInt("index", 0);
+                String konu = editKonu.getText().toString().trim();
+                String icerik = editIcerik.getText().toString().trim();
+                    if (konu.length() == 0 && icerik.length() > 0) {
+                        Ekleme(icerik,icerik);
+                    } else if (icerik.length() == 0) {
+                        Toast toast=Toast.makeText(getApplicationContext(),"Kayıt oluşturulamadı",Toast.LENGTH_SHORT);
+                        toast.show();
+                        finish();
+                    } else {
+                        Ekleme(konu,icerik);
+                    }
             }
         });
 
+        btnSil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.remove("konu"+index);
+                editor.remove("not"+index);
+                editor.commit();
 
 
-
+                finish();
+            }
+        });
     }
+        void tiklandigindaGetir(int indis)
+        {
+            editKonu.setText(preferences.getString("konu"+indis,"Konu girilmedi"));
+            editIcerik.setText(preferences.getString("not"+indis,"İcerik girilmedi"));
+
+        }
+
+    void Ekleme(String konu,String icerik)
+    {
+        editor.putString("konu"+x, konu);
+        editor.putString("not"+x, icerik);
+        x++;
+        editor.putInt("index",x);
+        editor.commit();
+       finish();
+    }
+    void Ekran_Goster()
+    {
+        editKonu.setVisibility(View.VISIBLE);
+        editIcerik.setVisibility(View.VISIBLE);
+    }
+
 
 }
